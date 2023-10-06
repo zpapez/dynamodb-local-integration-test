@@ -60,11 +60,28 @@
 			<groupId>software.amazon.awssdk</groupId>
 			<artifactId>dynamodb-enhanced</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.10.1</version>
+		</dependency>
 
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>DynamoDBLocal</artifactId>
+			<version>1.22.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-core</artifactId>
+			<version>2.2</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -103,16 +120,93 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
+<!--			<plugin>-->
+<!--				<groupId>org.apache.maven.plugins</groupId>-->
+<!--				<artifactId>maven-surefire-report-plugin</artifactId>-->
+<!--				<version>${surefire.plugin.version}</version>-->
+<!--				<executions>-->
+<!--					<execution>-->
+<!--						<phase>test</phase>-->
+<!--						<goals>-->
+<!--							<goal>report-only</goal>-->
+<!--						</goals>-->
+<!--					</execution>-->
+<!--				</executions>-->
+<!--			</plugin>-->
+
+<!--			https://github.com/mlk/AssortmentOfJUnitRules/issues/2 -->
+<!--			https://www.baeldung.com/dynamodb-local-integration-tests -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-report-plugin</artifactId>
-				<version>${surefire.plugin.version}</version>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>3.6.0</version>
 				<executions>
 					<execution>
-						<phase>test</phase>
+						<id>copy</id>
+						<phase>test-compile</phase>
 						<goals>
-							<goal>report-only</goal>
+							<goal>copy-dependencies</goal>
 						</goals>
+						<configuration>
+							<includeScope>test</includeScope>
+							<includeTypes>so,dll,dylib</includeTypes>
+							<outputDirectory>${project.build.directory}/native-libs</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin><!-- attach IT tests to verify phase -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>3.1.2</version>
+				<executions>
+					<execution>
+						<id>integration-test</id>
+						<goals>
+							<goal>integration-test</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<systemPropertyVariables>
+						<sqlite4java.library.path>${project.build.directory}/native-libs</sqlite4java.library.path>
+					</systemPropertyVariables>
+					<argLine>
+						--add-opens java.base/java.time=ALL-UNNAMED
+					</argLine>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>3.4.0</version>
+				<executions>
+					<execution>
+						<id>add-integration-test-source</id>
+						<phase>generate-test-sources</phase>
+						<goals>
+							<goal>add-test-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>src/integration-test/java</source>
+							</sources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>add-integration-test-resource</id>
+						<phase>generate-test-resources</phase>
+						<goals>
+							<goal>add-test-resource</goal>
+						</goals>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>src/integration-test/resources</directory>
+								</resource>
+							</resources>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
