@@ -20,9 +20,6 @@
 
 		<lombok.version>1.18.28</lombok.version>
 		<aws.java.sdk.version>2.20.64</aws.java.sdk.version>
-
-		<surefire.plugin.version>3.0.0</surefire.plugin.version>
-		<dynamodb.local.version>1.15.0</dynamodb.local.version>
 	</properties>
 
 	<dependencyManagement>
@@ -38,10 +35,6 @@
 	</dependencyManagement>
 
 	<dependencies>
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-starter</artifactId>-->
-<!--		</dependency>-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -75,7 +68,7 @@
 		<dependency>
 			<groupId>com.amazonaws</groupId>
 			<artifactId>DynamoDBLocal</artifactId>
-			<version>1.22.0</version>
+			<version>1.23.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -107,35 +100,9 @@
 							<artifactId>lombok</artifactId>
 							<version>${lombok.version}</version>
 						</path>
-<!--						<dependency>-->
-<!--							<groupId>org.projectlombok</groupId>-->
-<!--							<artifactId>lombok-mapstruct-binding</artifactId>-->
-<!--							<version>0.2.0</version>-->
-<!--						</dependency>-->
-<!--						<path>-->
-<!--							<groupId>org.mapstruct</groupId>-->
-<!--							<artifactId>mapstruct-processor</artifactId>-->
-<!--							<version>${org.mapstruct.version}</version>-->
-<!--						</path>-->
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
-<!--			<plugin>-->
-<!--				<groupId>org.apache.maven.plugins</groupId>-->
-<!--				<artifactId>maven-surefire-report-plugin</artifactId>-->
-<!--				<version>${surefire.plugin.version}</version>-->
-<!--				<executions>-->
-<!--					<execution>-->
-<!--						<phase>test</phase>-->
-<!--						<goals>-->
-<!--							<goal>report-only</goal>-->
-<!--						</goals>-->
-<!--					</execution>-->
-<!--				</executions>-->
-<!--			</plugin>-->
-
-<!--			https://github.com/mlk/AssortmentOfJUnitRules/issues/2 -->
-<!--			https://www.baeldung.com/dynamodb-local-integration-tests -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
@@ -212,47 +179,5 @@
 			</plugin>
 		</plugins>
 	</build>
-	<repositories>
-		<repository>
-			<id>dynamodb-local</id>
-			<name>DynamoDB Local Release Repository</name>
-			<url>https://s3-us-west-2.amazonaws.com/dynamodb-local/release</url>
-		</repository>
-
-		<repository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/milestone</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>spring-snapshots</id>
-			<name>Spring Snapshots</name>
-			<url>https://repo.spring.io/snapshot</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-		</repository>
-	</repositories>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/milestone</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</pluginRepository>
-		<pluginRepository>
-			<id>spring-snapshots</id>
-			<name>Spring Snapshots</name>
-			<url>https://repo.spring.io/snapshot</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-		</pluginRepository>
-	</pluginRepositories>
 
 </project>

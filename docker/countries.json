@@ -1,0 +1,28 @@
+{
+  "Country": [
+    {
+      "PutRequest": {
+        "Item": {
+          "countryCode": {
+            "S": "US"
+          },
+          "countryDisplayName": {
+            "S": "United States"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "countryCode": {
+            "S": "BR"
+          },
+          "countryDisplayName": {
+            "S": "Brazil"
+          }
+        }
+      }
+    }
+  ]
+}
