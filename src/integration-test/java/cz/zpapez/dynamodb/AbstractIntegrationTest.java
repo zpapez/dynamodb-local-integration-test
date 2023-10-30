@@ -8,7 +8,6 @@ import com.google.gson.stream.JsonWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import org.junit.jupiter.api.BeforeAll;
 import org.springframework.test.context.ActiveProfiles;
@@ -31,17 +30,6 @@ public abstract class AbstractIntegrationTest {
                     public ZonedDateTime read(JsonReader in) throws IOException {
                         return ZonedDateTime.parse(in.nextString());
                     }
-                })
-                .registerTypeAdapter(LocalDate.class, new TypeAdapter<LocalDate>() {
-                    @Override
-                    public void write(JsonWriter out, LocalDate value) throws IOException {
-                        out.value(value.toString());
-                    }
-                    @Override
-                    public LocalDate read(JsonReader in) throws IOException {
-                        return LocalDate.parse(in.nextString());
-                    }
-
                 })
                 .create();
     }

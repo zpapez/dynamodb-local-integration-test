@@ -14,7 +14,6 @@ import software.amazon.awssdk.enhanced.dynamodb.extensions.VersionedRecordExtens
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
-
 @Configuration
 @NoArgsConstructor
 @Slf4j
